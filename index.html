@@ -93,7 +93,6 @@ th {
 <body>
 
 <header>
-  <!-- 🔴 LOGOTIPO DA EMPRESA -->
   <img src="logo.png" alt="Logo da Empresa">
   <h2>Sistema Logístico – Fechamento Diário</h2>
   <p>Cadastro • Entregas • Relatório Excel</p>
@@ -226,9 +225,6 @@ let entregas = [];
 let selMoto = -1;
 let selEnt = -1;
 
-/* --- JS IGUAL AO QUE VOCÊ JÁ USA --- */
-/* Nenhuma lógica alterada */
-
 function irEtapa2() {
   dados = {
     cliente: cliente.value,
@@ -272,7 +268,6 @@ function addMotoboy() {
   nome_moto.value = "";
   vale_moto.value = "";
   aplica_chuva.checked = false;
-  nome_moto.focus();
   renderMotoboys();
 }
 
@@ -312,7 +307,6 @@ function addEntrega() {
     km: +km_entrega.value
   });
   km_entrega.value = "";
-  km_entrega.focus();
   renderEntregas();
 }
 
@@ -335,8 +329,9 @@ function renderEntregas() {
   });
 }
 
+/* ========= FUNÇÃO CORRIGIDA ========= */
 function gerarExcel() {
-  fetch("http://127.0.0.1:5000/gerar_excel", {
+  fetch("https://SEU-BACKEND.onrender.com/gerar_excel", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ dados, motoboys, entregas })
@@ -344,14 +339,11 @@ function gerarExcel() {
   .then(res => res.blob())
   .then(blob => {
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "relatorio_logistica.xlsx";
-    a.click();
-  });
+    window.open(url, "_blank"); // ✅ MOBILE SAFE
+  })
+  .catch(() => alert("Erro ao gerar o Excel"));
 }
 </script>
 
 </body>
 </html>
-
