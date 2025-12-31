@@ -331,7 +331,7 @@ function renderEntregas() {
 
 /* ========= FUNÇÃO CORRIGIDA ========= */
 function gerarExcel() {
-  fetch("https://SEU-BACKEND.onrender.com/gerar_excel", {
+  fetch("https://sistema-logistica-backend-5.onrender.com/gerar_excel", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ dados, motoboys, entregas })
